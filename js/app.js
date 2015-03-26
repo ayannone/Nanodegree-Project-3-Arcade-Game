@@ -1,15 +1,15 @@
 // Globals to set the min and max coordinate values for moving Player and Enemies on the canvas
 
-var speed = 50;
+var speed = 100;
 var distX = 101;
 var distY = 83;
 
 var playerMinXPos = 0;
 var playerMinYPos = -40;
-var playerMaxXPos = 4*distX; //404;
-var playerMaxYPos = 5*distY; //415;
+var playerMaxXPos = 4 * distX; //404;
+var playerMaxYPos = 5 * distY; //415;
 
-var enemyMaxXPos = 5*distX; //505;
+var enemyMaxXPos = 5 * distX; //505;
 
 // Enemies our player must avoid
 var Enemy = function(startX,startY) {
@@ -19,8 +19,6 @@ var Enemy = function(startX,startY) {
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
-    this.startX = startX;
-    this.startY = startY;
     this.x = startX;
     this.y = startY;
 }
@@ -32,7 +30,8 @@ Enemy.prototype.update = function(dt) {
     // which will ensure the game runs at the same speed for
     // all computers.
     if (this.x > enemyMaxXPos) {
-        this.x = this.startX;
+        this.x = -(Math.floor((Math.random() * 5) + 1)*distX);
+        this.y = Math.floor((Math.random() * 3) + 1)*distY;
     } else {
         this.x = this.x + speed*dt;
     }
@@ -110,13 +109,12 @@ Player.prototype.handleInput = function(key) {
 // Place the player object in a variable called player
 
 var allEnemies = [];
-var numEnemies = 5;
-var startPos = [[-1*distX,1*distY],[-4*distX,1*distY],[-6*distX,2*distY],[-2*distX,3*distY],[-8*distX,3*distY]];
+var numEnemies = 6;
 
 for (var i=0; i < numEnemies; i++) {
-    var startX = startPos[i][0];
-    var startY = startPos[i][1];
-    allEnemies.push(new Enemy(startX, startY));
+    var startX = -(Math.floor((Math.random() * 5) + 1) * distX);
+    var startY = Math.floor((Math.random() * 3) + 1) * distY;
+    allEnemies.push(new Enemy(startX,startY));
 }
 
 var player = new Player();
