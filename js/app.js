@@ -1,8 +1,8 @@
 // Globals to set the min and max coordinate values for moving Player and Enemies on the canvas
 
-var numEnemies = 6;
+var numEnemies = 4;
 
-var speed = 100;
+// var speed = 100;
 var lenX = 101;
 var lenY = 83;
 
@@ -25,6 +25,7 @@ var Enemy = function(startX,startY) {
     this.sprite = 'images/enemy-bug.png';
     this.x = startX;
     this.y = startY;
+    this.speed = Math.floor((Math.random() * 100) + 100); // speed  between 100 and 200
 }
 
 // Update the enemy's position, required method for game
@@ -37,7 +38,7 @@ Enemy.prototype.update = function(dt) {
         this.x = -(Math.floor((Math.random() * 5) + 1) * lenX);
         this.y = Math.floor((Math.random() * 3) + 1) * lenY;
     } else {
-        this.x = this.x + (speed * dt);
+        this.x = this.x + (this.speed * dt);
 
         // Collision detection with player
         // checking xPos first, then yPos
@@ -79,12 +80,11 @@ var Player = function() {
     this.y = playerStartYPos;
 }
 
-// Update the player's position, required method for game
+// Update the player's position,
+// automatically to start position, when reached the water line
 // Parameter: dt, a time delta between ticks
 Player.prototype.update = function(dt) {
-    // You should multiply any movement by the dt parameter
-    // which will ensure the game runs at the same speed for
-    // all computers.
+
 }
 
 // Draw the player on the screen, required method for game
