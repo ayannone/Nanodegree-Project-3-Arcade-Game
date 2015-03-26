@@ -84,6 +84,7 @@
     function isReady() {
         var ready = true;
         for(var k in resourceCache) {
+            // console.log(k); k is the url
             if(resourceCache.hasOwnProperty(k) &&
                !resourceCache[k]) {
                 ready = false;

@@ -1,19 +1,28 @@
 // Globals to set the min and max coordinate values for moving Player and Enemies on the canvas
+
+var speed = 50;
+var distX = 101;
+var distY = 83;
+
 var playerMinXPos = 0;
 var playerMinYPos = -40;
-var playerMaxXPos = 404;
-var playerMaxYPos = 415;
+var playerMaxXPos = 4*distX; //404;
+var playerMaxYPos = 5*distY; //415;
+
+var enemyMaxXPos = 5*distX; //505;
 
 // Enemies our player must avoid
-var Enemy = function() {
+var Enemy = function(startX,startY) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
 
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
-    this.x = 101;
-    this.y = 415; // 332
+    this.startX = startX;
+    this.startY = startY;
+    this.x = startX;
+    this.y = startY;
 }
 
 // Update the enemy's position, required method for game
@@ -22,6 +31,11 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
+    if (this.x > enemyMaxXPos) {
+        this.x = this.startX;
+    } else {
+        this.x = this.x + speed*dt;
+    }
 }
 
 // Draw the enemy on the screen, required method for game
@@ -40,8 +54,8 @@ var Player = function() {
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/char-boy.png';
-    this.x = 0;  // max width = 505
-    this.y = 375; //415;  // max height = 606, 375
+    this.x = 0;
+    this.y = 5*distY; //5*83=415
 }
 
 // Update the player's position, required method for game
@@ -97,9 +111,12 @@ Player.prototype.handleInput = function(key) {
 
 var allEnemies = [];
 var numEnemies = 5;
+var startPos = [[-1*distX,1*distY],[-4*distX,1*distY],[-6*distX,2*distY],[-2*distX,3*distY],[-8*distX,3*distY]];
 
-for (var i=0; i<numEnemies; i++) {
-   allEnemies.push(new Enemy());
+for (var i=0; i < numEnemies; i++) {
+    var startX = startPos[i][0];
+    var startY = startPos[i][1];
+    allEnemies.push(new Enemy(startX, startY));
 }
 
 var player = new Player();
