@@ -1,8 +1,7 @@
 // Globals to set the min and max coordinate values for moving Player and Enemies on the canvas
 
-var numEnemies = 4;
+var numEnemies = 1; //4;
 
-// var speed = 100;
 var lenX = 101;
 var lenY = 83;
 
@@ -50,9 +49,7 @@ Enemy.prototype.update = function(dt) {
             if (i >= player.x+colSpace && i <= player.x+lenX-colSpace) {
                 for (var j = this.y-lenY; j <= this.y; j++) {
                     if (j >= player.y-lenY+colSpace && j <= player.y-colSpace) {
-                        // reset Player position
-                        player.x = playerStartXPos;
-                        player.y = playerStartYPos;
+                        player.reset(0);
                     }
                 }
             }
@@ -78,13 +75,16 @@ var Player = function() {
     this.sprite = 'images/char-boy.png';
     this.x = playerStartXPos;
     this.y = playerStartYPos;
+    this.score = 0;
 }
 
 // Update the player's position,
 // automatically to start position, when reached the water line
-// Parameter: dt, a time delta between ticks
 Player.prototype.update = function(dt) {
-
+    if (this.y <= 0) {
+        this.score += 100;
+        this.reset(this.score);
+    }
 }
 
 // Draw the player on the screen, required method for game
@@ -99,30 +99,38 @@ Player.prototype.handleInput = function(key) {
         case 'left': // x cannot be smaller than 0
             var leftPos = this.x - lenX;
             if (leftPos >= playerMinXPos) {
-                player.x = leftPos;
+                this.x = leftPos;
             };
             break;
         case 'up': // y cannot be smaller than -40
             var upPos = this.y - lenY;
             if (upPos >= playerMinYPos) {
-                player.y = upPos;
+                this.y = upPos;
             };
             break;
         case 'right': // x cannot be bigger than 404
             var rightPos = this.x + lenX;
             if (rightPos <= playerMaxXPos) {
-                player.x = rightPos;
+                this.x = rightPos;
             };
             break;
         case 'down': // y cannot be bigger than 415
             var downPos = this.y + lenY;
             if (downPos <= playerMaxYPos) {
-                player.y = downPos;
+                this.y = downPos;
             };
             break;
         default:
             console.log("wrong key for moving player");
     }
+}
+
+Player.prototype.reset = function(score){
+    this.x = playerStartXPos;
+    this.y = playerStartYPos;
+    this.score = score;
+    var h2Text = document.getElementById('score');
+    h2Text.innerHTML = this.score;
 }
 
 
@@ -152,5 +160,4 @@ document.addEventListener('keyup', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
-
 
