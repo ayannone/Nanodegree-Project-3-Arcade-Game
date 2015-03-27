@@ -11,6 +11,22 @@ ul {
   list-style: none;
 }
 
-ul li {
+ul li, div {
   display: inline;
+}
+
+.crop {
+  height: 101px;
+  width: 101px;
+  overflow: hidden;
+}
+
+.crop img {
+  height: 171px;
+  width: 101px;
+  margin-top: -50px;
+}
+
+ul li #active {
+  background: rgba(255,0,0,0.1);
 }
