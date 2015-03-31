@@ -72,6 +72,8 @@ var Player = function() {
 
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
+    this.sprite = $('.active').val(); //'images/char-boy.png';
+    alert(this.sprite);
     this.sprite = 'images/char-boy.png';
     this.x = playerStartXPos;
     this.y = playerStartYPos;
@@ -160,4 +162,3 @@ document.addEventListener('keyup', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
-
