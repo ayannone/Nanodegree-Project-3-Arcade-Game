@@ -136,7 +136,7 @@ var Engine = (function(global) {
             }
         }
 
-
+        // >>>>> call, when user hits START button:
         renderEntities();
     }
 
@@ -169,6 +169,8 @@ var Engine = (function(global) {
      */
 
     console.log("Engine started");
+
+
     Resources.load([
         'images/stone-block.png',
         'images/water-block.png',
@@ -178,7 +180,15 @@ var Engine = (function(global) {
         'images/char-cat-girl.png',
         'images/char-horn-girl.png',
         'images/char-pink-girl.png',
-        'images/char-princess-girl.png'
+        'images/char-princess-girl.png',
+        'images/Gem Blue.png',
+        'images/Gem Green.png',
+        'images/Gem Orange.png',
+        'images/Heart.png',
+        'images/Star.png',
+        'images/Key.png',
+        'images/Rock.png',
+        'images/Selector.png'
     ]);
     Resources.onReady(init);
 

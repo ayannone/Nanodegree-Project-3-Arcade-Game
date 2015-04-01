@@ -1,6 +1,6 @@
 // Globals to set the min and max coordinate values for moving Player and Enemies on the canvas
 
-var numEnemies = 1; //4;
+var numEnemies = 4;
 
 var lenX = 101;
 var lenY = 83;
@@ -72,12 +72,16 @@ var Player = function() {
 
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
-    this.sprite = $('.active').val(); //'images/char-boy.png';
-    alert(this.sprite);
     this.sprite = 'images/char-boy.png';
+    // this.setSprite();
     this.x = playerStartXPos;
     this.y = playerStartYPos;
     this.score = 0;
+}
+
+Player.prototype.setSprite = function() {
+    this.sprite = $('.active').attr('src');
+    console.log('this.sprite: ', this.sprite);
 }
 
 // Update the player's position,
