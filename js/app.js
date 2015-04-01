@@ -38,22 +38,6 @@ Enemy.prototype.update = function(dt) {
         this.y = Math.floor((Math.random() * 3) + 1) * lenY;
     } else {
         this.x = this.x + (this.speed * dt);
-
-        // Collision detection with player
-        // checking xPos first, then yPos
-
-        // colSpace allows to overlap the position of the enemy and player images by xx pixels
-        var colSpace = 25;
-
-        for (var i = this.x; i <= this.x+lenX; i++) {
-            if (i >= player.x+colSpace && i <= player.x+lenX-colSpace) {
-                for (var j = this.y-lenY; j <= this.y; j++) {
-                    if (j >= player.y-lenY+colSpace && j <= player.y-colSpace) {
-                        player.reset(0);
-                    }
-                }
-            }
-        }
     }
 }
 

@@ -80,7 +80,7 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
-        // checkCollisions();
+        checkCollisions();
     }
 
     /* This is called by the update function  and loops through all of the
@@ -95,6 +95,24 @@ var Engine = (function(global) {
             enemy.update(dt);
         });
         player.update();
+    }
+
+    // Collision detection with player
+    // checking xPos first, then yPos
+    // colSpace allows to overlap the position of the enemy and player images by xx pixels
+    function checkCollisions() {
+        var colSpace = 25;
+        allEnemies.forEach(function(enemy) {
+            for (var i = enemy.x; i <= enemy.x+lenX; i++) {
+                if (i >= player.x+colSpace && i <= player.x+lenX-colSpace) {
+                    for (var j = enemy.y-lenY; j <= enemy.y; j++) {
+                        if (j >= player.y-lenY+colSpace && j <= player.y-colSpace) {
+                            player.reset(0);
+                        }
+                    }
+                }
+            }
+        })
     }
 
     /* This function initially draws the "game level", it will then call
