@@ -14,6 +14,17 @@ var playerMaxYPos = 5 * lenY; //415;
 
 var enemyMaxXPos = 5 * lenX; //505;
 
+var collectibles = [
+    'images/Gem Blue.png',
+    'images/Gem Green.png',
+    'images/Gem Orange.png',
+    // 'images/Heart.png',
+    // 'images/Star.png',
+    // 'images/Rock.png',
+    // 'images/Key.png',
+    // 'images/Selector.png'
+];
+
 // Enemies our player must avoid
 var Enemy = function(startX,startY) {
     // Variables applied to each of our instances go here,
@@ -43,6 +54,17 @@ Enemy.prototype.update = function(dt) {
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+}
+
+// These are collectibles to earn points and other things
+var Collectible = function(img,xPos,yPos) {
+    this.sprite = img;
+    this.x = xPos;
+    this.y = yPos;
+}
+
+Collectible.prototype.render = function(){
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
 
@@ -123,10 +145,8 @@ Player.prototype.reset = function(score){
     h2Text.innerHTML = this.score;
 }
 
-
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
-// Place the player object in a variable called player
 
 var allEnemies = [];
 
@@ -135,6 +155,39 @@ for (var i=0; i < numEnemies; i++) {
     var startY = Math.floor((Math.random() * 3) + 1) * lenY;
     allEnemies.push(new Enemy(startX,startY));
 }
+
+// Place all collectible objects in an array called allCollectibles
+// make sure, they do not overlap
+
+var allCollectibles = []
+var positions = []
+var xPos, yPos;
+
+for (var i=0; i < collectibles.length; i++) {
+    xPos = Math.floor((Math.random() * 4) + 1) * lenX;
+    yPos = (Math.floor((Math.random() * 3) + 1) * lenY)-20;
+    if (positions != []) {
+        var position = checkPosition(positions,xPos,yPos);
+        xPos = position[0];
+        yPos = position[1];
+    };
+    allCollectibles.push(new Collectible(collectibles[i],xPos,yPos));
+    positions.push([xPos,yPos]);
+    console.log(xPos,yPos);
+}
+
+function checkPosition(positions,xPos,yPos) {
+    for (var j=0; j < positions.length; j++) {
+        if ( (xPos == positions[j][0]) && (yPos == positions[j][1]) ) {
+            xPos = Math.floor((Math.random() * 4) + 1) * lenX;
+            yPos = (Math.floor((Math.random() * 3) + 1) * lenY)-20;
+            checkPosition(positions,xPos,yPos);
+        }
+    }
+    return [xPos,yPos];
+}
+
+// Place the player object in a variable called player
 
 var player = new Player();
 

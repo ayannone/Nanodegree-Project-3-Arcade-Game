@@ -170,6 +170,10 @@ var Engine = (function(global) {
             enemy.render();
         });
 
+        allCollectibles.forEach(function(collectible) {
+            collectible.render();
+        });
+
         player.render();
     }
 
@@ -187,7 +191,6 @@ var Engine = (function(global) {
      */
 
     console.log("Engine started");
-
 
     Resources.load([
         'images/stone-block.png',
