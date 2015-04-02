@@ -25,6 +25,8 @@ var collectibles = [
     'images/Selector.png'
 ];
 
+var numPlayCollectibles = 3; // number of collectibles placed on canvas, randomly chosen
+
 // Enemies our player must avoid
 var Enemy = function(startX,startY) {
     // Variables applied to each of our instances go here,
@@ -166,8 +168,18 @@ for (var i=0; i < numEnemies; i++) {
 var allCollectibles = []
 var positions = []
 var xPos, yPos;
+var playCollectibles = [];
 
-for (var i=0; i < collectibles.length; i++) {
+// only 'numPlayCollectibles' collectibles are placed on the canvase
+for (var x=0; x < numPlayCollectibles; x++) {
+    var index = Math.floor(Math.random() * collectibles.length);
+    playCollectibles.push(collectibles[index]);
+    collectibles.splice(index,1);
+}
+
+// place the first collectible on the canvas and for all the others call 'checkPosition'
+// to place each collectible on its own tile
+for (var i=0; i < playCollectibles.length; i++) {
     xPos = Math.floor((Math.random() * 5) + 0) * lenX;
     yPos = (Math.floor((Math.random() * 3) + 1) * lenY)-20;
     if (positions.length != 0) {
@@ -175,9 +187,9 @@ for (var i=0; i < collectibles.length; i++) {
         xPos = position[0];
         yPos = position[1];
     };
-    allCollectibles.push(new Collectible(collectibles[i],xPos,yPos));
+    allCollectibles.push(new Collectible(playCollectibles[i],xPos,yPos));
     positions.push([xPos,yPos]);
-    console.log("Final gem position: ", xPos,yPos);
+    // console.log("Final gem position: ", xPos,yPos);
 }
 
 // this is a recursive function to ensure that only one collectible (and not more)
