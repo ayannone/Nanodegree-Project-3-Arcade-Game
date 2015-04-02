@@ -18,11 +18,11 @@ var collectibles = [
     'images/Gem Blue.png',
     'images/Gem Green.png',
     'images/Gem Orange.png',
-    // 'images/Heart.png',
-    // 'images/Star.png',
-    // 'images/Rock.png',
-    // 'images/Key.png',
-    // 'images/Selector.png'
+    'images/Heart.png',
+    'images/Star.png',
+    'images/Rock.png',
+    'images/Key.png',
+    'images/Selector.png'
 ];
 
 // Enemies our player must avoid
@@ -145,6 +145,10 @@ Player.prototype.reset = function(score){
     h2Text.innerHTML = this.score;
 }
 
+Player.prototype.collect = function(score){
+    this.score = score; //collectible.value;
+}
+
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 
@@ -164,31 +168,33 @@ var positions = []
 var xPos, yPos;
 
 for (var i=0; i < collectibles.length; i++) {
-    xPos = Math.floor((Math.random() * 4) + 1) * lenX;
+    xPos = Math.floor((Math.random() * 5) + 0) * lenX;
     yPos = (Math.floor((Math.random() * 3) + 1) * lenY)-20;
-    if (positions != []) {
+    if (positions.length != 0) {
         var position = checkPosition(positions,xPos,yPos);
         xPos = position[0];
         yPos = position[1];
     };
     allCollectibles.push(new Collectible(collectibles[i],xPos,yPos));
     positions.push([xPos,yPos]);
-    console.log(xPos,yPos);
+    console.log("Final gem position: ", xPos,yPos);
 }
 
+// this is a recursive function to ensure that only one collectible (and not more)
+// is placed on one tile
 function checkPosition(positions,xPos,yPos) {
     for (var j=0; j < positions.length; j++) {
+
         if ( (xPos == positions[j][0]) && (yPos == positions[j][1]) ) {
-            xPos = Math.floor((Math.random() * 4) + 1) * lenX;
+            xPos = Math.floor((Math.random() * 5) + 0) * lenX;
             yPos = (Math.floor((Math.random() * 3) + 1) * lenY)-20;
-            checkPosition(positions,xPos,yPos);
+            return checkPosition(positions,xPos,yPos);
         }
     }
     return [xPos,yPos];
 }
 
 // Place the player object in a variable called player
-
 var player = new Player();
 
 // This listens for key presses and sends the keys to your

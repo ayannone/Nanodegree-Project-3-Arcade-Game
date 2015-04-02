@@ -112,6 +112,17 @@ var Engine = (function(global) {
                     }
                 }
             }
+        });
+        allCollectibles.forEach(function(collectible){
+            for (var i = collectible.x; i <= collectible.x+lenX; i++) {
+                if (i >= player.x+colSpace && i <= player.x+lenX-colSpace) {
+                    for (var j = collectible.y-lenY; j <= collectible.y; j++) {
+                        if (j >= player.y-lenY+colSpace && j <= player.y-colSpace) {
+                            player.collect(30);
+                        }
+                    }
+                }
+            }
         })
     }
 
