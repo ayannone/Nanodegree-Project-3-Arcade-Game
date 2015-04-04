@@ -71,8 +71,7 @@ Collectible.prototype.render = function(){
 }
 
 Collectible.prototype.remove = function(){
-    var index = allCollectibles.indexOf(this);
-    allCollectibles.splice(index,1);
+    canvasCollectibles.splice(canvasCollectibles.indexOf(this),1);
 }
 
 // Now write your own player class
@@ -94,7 +93,7 @@ var Player = function() {
 
 Player.prototype.setSprite = function() {
     this.sprite = $('.active').attr('src');
-    console.log('this.sprite: ', this.sprite);
+    // console.log('this.sprite: ', this.sprite);
 }
 
 // Update the player's position,
@@ -142,7 +141,7 @@ Player.prototype.handleInput = function(key) {
         default:
             console.log("wrong key for moving player");
     }
-    console.log("Player position: ", this.x, this.y);
+    // console.log("Player position: ", this.x, this.y);
 }
 
 Player.prototype.reset = function(score){
@@ -151,6 +150,7 @@ Player.prototype.reset = function(score){
     this.score = score;
     var h2Text = document.getElementById('score');
     h2Text.innerHTML = this.score;
+    placeCollectiblesOnCanvas();
 }
 
 Player.prototype.collect = function(score){
@@ -171,45 +171,56 @@ for (var i=0; i < numEnemies; i++) {
 // Place all collectible objects in an array called allCollectibles
 // make sure, they do not overlap
 
-var allCollectibles = []
-var positions = []
-var xPos, yPos;
-var playCollectibles = [];
+var allCollectibles;  // just a copy of collectibles, from which collectibles are spliced
+var canvasCollectibles; // holds all the collectibles, that are being placed on the canvas
 
-// only 'numPlayCollectibles' collectibles are placed on the canvase
-for (var x=0; x < numPlayCollectibles; x++) {
-    var index = Math.floor(Math.random() * collectibles.length);
-    playCollectibles.push(collectibles[index]);
-    collectibles.splice(index,1);
-}
+function placeCollectiblesOnCanvas(){
+    allCollectibles = [];
+    canvasCollectibles = [];
 
-// place the first collectible on the canvas and for all the others call 'checkPosition'
-// to place each collectible on its own tile
-for (var i=0; i < playCollectibles.length; i++) {
-    xPos = Math.floor((Math.random() * 5) + 0) * lenX;
-    yPos = (Math.floor((Math.random() * 3) + 1) * lenY)-collectibleYPosAdjust;
-    if (positions.length != 0) {
-        var position = checkPosition(positions,xPos,yPos);
-        xPos = position[0];
-        yPos = position[1];
-    };
-    allCollectibles.push(new Collectible(playCollectibles[i],xPos,yPos));
-    positions.push([xPos,yPos]);
-    console.log("Gem position: ", playCollectibles[i],xPos,yPos);
-}
+    // create a copy of collectibles => allCollectibles
+    collectibles.forEach(function(collectible){
+        allCollectibles.push(collectible);
+    });
+    var positions = []
+    var xPos, yPos;
+    var playCollectibleImgUrl = [];
 
-// this is a recursive function to ensure that only one collectible (and not more)
-// is placed on one tile
-function checkPosition(positions,xPos,yPos) {
-    for (var j=0; j < positions.length; j++) {
-
-        if ( (xPos == positions[j][0]) && (yPos == positions[j][1]) ) {
-            xPos = Math.floor((Math.random() * 5) + 0) * lenX;
-            yPos = (Math.floor((Math.random() * 3) + 1) * lenY)-collectibleYPosAdjust;
-            return checkPosition(positions,xPos,yPos);
-        }
+    // only 'numPlayCollectibles' collectibles are placed on the canvas
+    for (var x=0; x < numPlayCollectibles; x++) {
+        var index = Math.floor(Math.random() * allCollectibles.length);
+        playCollectibleImgUrl.push(allCollectibles[index]);
+        allCollectibles.splice(index,1);
     }
-    return [xPos,yPos];
+
+    // place the first collectible on the canvas and for all the others call 'checkPosition'
+    // to place each collectible on its own tile
+    for (var i=0; i < playCollectibleImgUrl.length; i++) {
+        xPos = Math.floor((Math.random() * 5) + 0) * lenX;
+        yPos = (Math.floor((Math.random() * 3) + 1) * lenY)-collectibleYPosAdjust;
+        if (positions.length != 0) {
+            var position = checkPosition(positions,xPos,yPos);
+            xPos = position[0];
+            yPos = position[1];
+        };
+        canvasCollectibles.push(new Collectible(playCollectibleImgUrl[i],xPos,yPos));
+        positions.push([xPos,yPos]);
+        // console.log("Gem position: ", playCollectibleImgUrl[i],xPos,yPos);
+    }
+
+    // this is a recursive function to ensure that only one collectible (and not more)
+    // is placed on one tile
+    function checkPosition(positions,xPos,yPos) {
+        for (var j=0; j < positions.length; j++) {
+
+            if ( (xPos == positions[j][0]) && (yPos == positions[j][1]) ) {
+                xPos = Math.floor((Math.random() * 5) + 0) * lenX;
+                yPos = (Math.floor((Math.random() * 3) + 1) * lenY)-collectibleYPosAdjust;
+                return checkPosition(positions,xPos,yPos);
+            }
+        }
+        return [xPos,yPos];
+    }
 }
 
 // Place the player object in a variable called player

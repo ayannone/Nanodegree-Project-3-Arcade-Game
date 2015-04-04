@@ -115,10 +115,9 @@ var Engine = (function(global) {
             }
         });
 
-        allCollectibles.forEach(function(collectible){
-            if ( (player.x == collectible.x) && (player.y-collectibleYPosAdjust == collectible.y) ) {
-                console.log("Player/Collectible (x/y):" + player.x + " / " + collectible.x + ", " + player.y + "/ " + collectible.y);
-                collectible.remove();
+        canvasCollectibles.forEach(function(canvasCollectible){
+            if ( (player.x == canvasCollectible.x) && (player.y-collectibleYPosAdjust == canvasCollectible.y) ) {
+                canvasCollectible.remove();
                 player.collect(30);
             }
         })
@@ -179,8 +178,8 @@ var Engine = (function(global) {
             enemy.render();
         });
 
-        allCollectibles.forEach(function(collectible) {
-            collectible.render();
+        canvasCollectibles.forEach(function(canvasCollectible) {
+            canvasCollectible.render();
         });
 
         player.render();
@@ -191,7 +190,8 @@ var Engine = (function(global) {
      * those sorts of things. It's only called once by the init() method.
      */
     function reset() {
-        // noop
+        // when reset game, place new collectibles on canvas
+        placeCollectiblesOnCanvas();
     }
 
     /* Go ahead and load all of the images we know we're going to need to
