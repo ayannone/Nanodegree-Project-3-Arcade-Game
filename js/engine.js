@@ -102,6 +102,7 @@ var Engine = (function(global) {
     // colSpace allows to overlap the position of the enemy and player images by xx pixels
     function checkCollisions() {
         var colSpace = 25;
+
         allEnemies.forEach(function(enemy) {
             for (var i = enemy.x; i <= enemy.x+lenX; i++) {
                 if (i >= player.x+colSpace && i <= player.x+lenX-colSpace) {
@@ -113,15 +114,12 @@ var Engine = (function(global) {
                 }
             }
         });
+
         allCollectibles.forEach(function(collectible){
-            for (var i = collectible.x; i <= collectible.x+lenX; i++) {
-                if (i >= player.x+colSpace && i <= player.x+lenX-colSpace) {
-                    for (var j = collectible.y-lenY; j <= collectible.y; j++) {
-                        if (j >= player.y-lenY+colSpace && j <= player.y-colSpace) {
-                            player.collect(30);
-                        }
-                    }
-                }
+            if ( (player.x == collectible.x) && (player.y-collectibleYPosAdjust == collectible.y) ) {
+                console.log("Player/Collectible (x/y):" + player.x + " / " + collectible.x + ", " + player.y + "/ " + collectible.y);
+                collectible.remove();
+                player.collect(30);
             }
         })
     }

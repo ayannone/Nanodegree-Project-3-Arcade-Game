@@ -1,6 +1,6 @@
 // Globals to set the min and max coordinate values for moving Player and Enemies on the canvas
 
-var numEnemies = 4;
+var numEnemies = 0; //4;
 
 var lenX = 101;
 var lenY = 83;
@@ -23,8 +23,8 @@ var collectibles = [
     'images/Rock.png',
     'images/Key.png',
     'images/Selector.png'
-];
-
+    ];
+var collectibleYPosAdjust = 20; // number of pixels to subtract from y position to nicely place collectible on canvas
 var numPlayCollectibles = 3; // number of collectibles placed on canvas, randomly chosen
 
 // Enemies our player must avoid
@@ -68,6 +68,11 @@ var Collectible = function(img,xPos,yPos) {
 
 Collectible.prototype.render = function(){
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+}
+
+Collectible.prototype.remove = function(){
+    var index = allCollectibles.indexOf(this);
+    allCollectibles.splice(index,1);
 }
 
 // Now write your own player class
@@ -137,6 +142,7 @@ Player.prototype.handleInput = function(key) {
         default:
             console.log("wrong key for moving player");
     }
+    console.log("Player position: ", this.x, this.y);
 }
 
 Player.prototype.reset = function(score){
@@ -148,7 +154,7 @@ Player.prototype.reset = function(score){
 }
 
 Player.prototype.collect = function(score){
-    this.score = score; //collectible.value;
+    this.score += score; //collectible.value;
 }
 
 // Now instantiate your objects.
@@ -181,7 +187,7 @@ for (var x=0; x < numPlayCollectibles; x++) {
 // to place each collectible on its own tile
 for (var i=0; i < playCollectibles.length; i++) {
     xPos = Math.floor((Math.random() * 5) + 0) * lenX;
-    yPos = (Math.floor((Math.random() * 3) + 1) * lenY)-20;
+    yPos = (Math.floor((Math.random() * 3) + 1) * lenY)-collectibleYPosAdjust;
     if (positions.length != 0) {
         var position = checkPosition(positions,xPos,yPos);
         xPos = position[0];
@@ -189,7 +195,7 @@ for (var i=0; i < playCollectibles.length; i++) {
     };
     allCollectibles.push(new Collectible(playCollectibles[i],xPos,yPos));
     positions.push([xPos,yPos]);
-    // console.log("Final gem position: ", xPos,yPos);
+    console.log("Gem position: ", playCollectibles[i],xPos,yPos);
 }
 
 // this is a recursive function to ensure that only one collectible (and not more)
@@ -199,7 +205,7 @@ function checkPosition(positions,xPos,yPos) {
 
         if ( (xPos == positions[j][0]) && (yPos == positions[j][1]) ) {
             xPos = Math.floor((Math.random() * 5) + 0) * lenX;
-            yPos = (Math.floor((Math.random() * 3) + 1) * lenY)-20;
+            yPos = (Math.floor((Math.random() * 3) + 1) * lenY)-collectibleYPosAdjust;
             return checkPosition(positions,xPos,yPos);
         }
     }
