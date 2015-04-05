@@ -1,5 +1,6 @@
 // Globals to set the min and max coordinate values for moving Player and Enemies on the canvas
 
+var gameDuration = 5000; // value in milliseconds
 var numEnemies = 0; //4;
 
 var lenX = 101;
@@ -105,6 +106,7 @@ Player.prototype.update = function(dt) {
     if (this.y <= 0) {
         this.score += 100;
         this.reset(this.score);
+        placeCollectiblesOnCanvas();
     }
 }
 
@@ -151,14 +153,23 @@ Player.prototype.reset = function(score){
     this.x = playerStartXPos;
     this.y = playerStartYPos;
     this.score = score;
-    var h2Text = document.getElementById('score');
-    h2Text.innerHTML = this.score;
-    placeCollectiblesOnCanvas();
+    var scoreEl = document.getElementById('score');
+    scoreEl.innerHTML = this.score;
+    // placeCollectiblesOnCanvas();
 }
 
 Player.prototype.collect = function(score){
     this.score += score; //collectible.value;
 }
+
+// Player.prototype.stop = function(score){
+//     this.x = playerStartXPos;
+//     this.y = playerStartYPos;
+//     this.score = score;
+//     var scoreEl = document.getElementById('score');
+//     scoreEl.innerHTML = this.score;
+//     removeCollectiblesFromCanvas()
+// }
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
@@ -225,13 +236,29 @@ function placeCollectiblesOnCanvas(){
     }
 }
 
+function removeCollectiblesFromCanvas(){
+    canvasCollectibles = [];
+}
+
 // Place the player object in a variable called player
 var player = new Player();
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
+// After adding a timer to the game, there is an activateKeys AND deactivateKeys function
+// game start activate the keys, game over deactivate the keys
 
-document.addEventListener('keyup', function(e) {
+function activateKeys() {
+    console.log("activateKeys");
+    document.addEventListener('keyup', keyFunction);
+}
+
+function deactivateKeys() {
+    console.log("deactivateKeys");
+    document.removeEventListener('keyup', keyFunction);
+}
+
+function keyFunction(e) {
     // storing previous player x,y position to reset to when hitting an obstacle (stone)
     playerPrevXPos = player.x;
     playerPrevYPos = player.y;
@@ -244,4 +271,31 @@ document.addEventListener('keyup', function(e) {
     };
 
     player.handleInput(allowedKeys[e.keyCode]);
-});
+}
+
+
+// set a timer for the game, started in start() function in engine.js
+// with a duration of 'gameDuration' in milliseconds
+
+var timerEl = document.getElementById('timer');
+var timer = gameDuration / 1000;
+timerEl.innerHTML = timer;
+
+var gameInterval = setInterval(function(){
+    timer -= 1;
+    timerEl.innerHTML = timer;
+}, 1000);
+
+
+function gameStart() {
+    console.log("Game start");
+    activateKeys(); // each game start => activate the keys
+}
+
+function gameStop() {
+    console.log("Game over");
+    deactivateKeys(); // each game stop => deactivate the keys
+    player.reset(player.score); // move player to start position
+    removeCollectiblesFromCanvas();
+    clearInterval(gameInterval); // stop timer
+}

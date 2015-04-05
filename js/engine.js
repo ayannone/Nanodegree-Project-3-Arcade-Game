@@ -69,6 +69,21 @@ var Engine = (function(global) {
         main();
     }
 
+    // This function starts a new game with a timer of gameDuration in milliseconds
+
+    function start() {
+        gameStart();
+        renderCanvas();
+        player.render();
+
+        var start = true;
+        if  (start == true) {
+            setTimeout(function(){ gameStop(); }, gameDuration);
+            init();
+        }
+    }
+
+
     /* This function is called by main (our game loop) and itself calls all
      * of the functions which may need to update entity's data. Based on how
      * you implement your collision detection (when two entities occupy the
@@ -110,6 +125,7 @@ var Engine = (function(global) {
                     for (var j = enemy.y-lenY; j <= enemy.y; j++) {
                         if (j >= player.y-lenY+colSpace && j <= player.y-colSpace) {
                             player.reset(0);
+                            reset();
                         }
                     }
                 }
@@ -145,6 +161,11 @@ var Engine = (function(global) {
      * they are just drawing the entire screen over and over.
      */
     function render() {
+        renderCanvas();
+        renderEntities();
+    }
+
+    function renderCanvas() {
         /* This array holds the relative URL to the image used
          * for that particular row of the game level.
          */
@@ -177,8 +198,8 @@ var Engine = (function(global) {
             }
         }
 
-        // >>>>> call, when user hits START button:
-        renderEntities();
+// >>>>> call, when user hits START button:
+        // renderEntities();
     }
 
     /* This function is called by the render function and is called on each game
@@ -235,7 +256,8 @@ var Engine = (function(global) {
         'images/Rock.png',
         'images/Selector.png'
     ]);
-    Resources.onReady(init);
+    // Resources.onReady(init);
+    Resources.onReady(start);
 
     /* Assign the canvas' context object to the global variable (the window
      * object when run in a browser) so that developer's can use it more easily
