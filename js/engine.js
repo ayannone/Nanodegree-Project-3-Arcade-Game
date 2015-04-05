@@ -103,6 +103,7 @@ var Engine = (function(global) {
     function checkCollisions() {
         var colSpace = 25;
 
+        // when player hits an enemy the game is over and player returns to start position
         allEnemies.forEach(function(enemy) {
             for (var i = enemy.x; i <= enemy.x+lenX; i++) {
                 if (i >= player.x+colSpace && i <= player.x+lenX-colSpace) {
@@ -115,10 +116,24 @@ var Engine = (function(global) {
             }
         });
 
+        // when player hits an obstacle (stone), then set player's position back to prev position
+        // so player cannot move over obstacle
         canvasCollectibles.forEach(function(canvasCollectible){
-            if ( (player.x == canvasCollectible.x) && (player.y-collectibleYPosAdjust == canvasCollectible.y) ) {
-                canvasCollectible.remove();
+            if (canvasCollectible.sprite == "images/Rock.png") {
+                for (var i = canvasCollectible.x; i <= canvasCollectible.x+lenX; i++) {
+                    if (i >= player.x+colSpace && i <= player.x+lenX-colSpace) {
+                        for (var j = canvasCollectible.y-lenY; j <= canvasCollectible.y; j++) {
+                            if (j >= player.y-lenY+colSpace && j <= player.y-colSpace) {
+                                player.x = playerPrevXPos;
+                                player.y = playerPrevYPos;
+                            }
+                        }
+                    }
+                }
+            // if player hits a collectible item, then increase score and remove collectible from canvas
+            } else if ( (player.x == canvasCollectible.x) && (player.y-collectibleYPosAdjust == canvasCollectible.y) ) {
                 player.collect(30);
+                canvasCollectible.remove();
             }
         })
     }

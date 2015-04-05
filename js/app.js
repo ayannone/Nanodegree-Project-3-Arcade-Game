@@ -11,6 +11,8 @@ var playerMinXPos = 0;
 var playerMinYPos = -40;
 var playerMaxXPos = 4 * lenX; //404;
 var playerMaxYPos = 5 * lenY; //415;
+var playerPrevXPos;
+var playerPrevYPos;
 
 var enemyMaxXPos = 5 * lenX; //505;
 
@@ -212,7 +214,6 @@ function placeCollectiblesOnCanvas(){
     // is placed on one tile
     function checkPosition(positions,xPos,yPos) {
         for (var j=0; j < positions.length; j++) {
-
             if ( (xPos == positions[j][0]) && (yPos == positions[j][1]) ) {
                 xPos = Math.floor((Math.random() * 5) + 0) * lenX;
                 yPos = (Math.floor((Math.random() * 3) + 1) * lenY)-collectibleYPosAdjust;
@@ -228,7 +229,12 @@ var player = new Player();
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
+
 document.addEventListener('keyup', function(e) {
+    // storing previous player x,y position to reset to when hitting an obstacle (stone)
+    playerPrevXPos = player.x;
+    playerPrevYPos = player.y;
+
     var allowedKeys = {
         37: 'left',
         38: 'up',
