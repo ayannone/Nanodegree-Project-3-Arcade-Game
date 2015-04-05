@@ -17,14 +17,14 @@ var playerPrevYPos;
 var enemyMaxXPos = 5 * lenX; //505;
 
 var collectibles = [
-    'images/Gem Blue.png',
-    'images/Gem Green.png',
-    'images/Gem Orange.png',
-    'images/Heart.png',
-    'images/Star.png',
-    'images/Rock.png',
-    'images/Key.png',
-    'images/Selector.png'
+    ['images/Gem Blue.png',10],
+    ['images/Gem Green.png',10],
+    ['images/Gem Orange.png',10],
+    ['images/Heart.png',30],
+    ['images/Star.png',30],
+    ['images/Rock.png',0],
+    ['images/Key.png',30],
+    ['images/Selector.png',30]
     ];
 var collectibleYPosAdjust = 20; // number of pixels to subtract from y position to nicely place collectible on canvas
 var numPlayCollectibles = 3; // number of collectibles placed on canvas, randomly chosen
@@ -62,8 +62,9 @@ Enemy.prototype.render = function() {
 }
 
 // These are collectibles to earn points and other things
-var Collectible = function(img,xPos,yPos) {
+var Collectible = function(img,points,xPos,yPos) {
     this.sprite = img;
+    this.points = points;
     this.x = xPos;
     this.y = yPos;
 }
@@ -186,18 +187,18 @@ function placeCollectiblesOnCanvas(){
     });
     var positions = []
     var xPos, yPos;
-    var playCollectibleImgUrl = [];
+    var playCollectibleImgPoints = [];
 
     // only 'numPlayCollectibles' collectibles are placed on the canvas
     for (var x=0; x < numPlayCollectibles; x++) {
         var index = Math.floor(Math.random() * allCollectibles.length);
-        playCollectibleImgUrl.push(allCollectibles[index]);
+        playCollectibleImgPoints.push(allCollectibles[index]);
         allCollectibles.splice(index,1);
     }
 
     // place the first collectible on the canvas and for all the others call 'checkPosition'
     // to place each collectible on its own tile
-    for (var i=0; i < playCollectibleImgUrl.length; i++) {
+    for (var i=0; i < playCollectibleImgPoints.length; i++) {
         xPos = Math.floor((Math.random() * 5) + 0) * lenX;
         yPos = (Math.floor((Math.random() * 3) + 1) * lenY)-collectibleYPosAdjust;
         if (positions.length != 0) {
@@ -205,9 +206,9 @@ function placeCollectiblesOnCanvas(){
             xPos = position[0];
             yPos = position[1];
         };
-        canvasCollectibles.push(new Collectible(playCollectibleImgUrl[i],xPos,yPos));
+        canvasCollectibles.push(new Collectible(playCollectibleImgPoints[i][0],playCollectibleImgPoints[i][1],xPos,yPos));
         positions.push([xPos,yPos]);
-        // console.log("Gem position: ", playCollectibleImgUrl[i],xPos,yPos);
+        // console.log("Gem position: ", playCollectibleImgPoints[i][0],xPos,yPos);
     }
 
     // this is a recursive function to ensure that only one collectible (and not more)

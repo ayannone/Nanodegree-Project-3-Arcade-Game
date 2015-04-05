@@ -132,7 +132,7 @@ var Engine = (function(global) {
                 }
             // if player hits a collectible item, then increase score and remove collectible from canvas
             } else if ( (player.x == canvasCollectible.x) && (player.y-collectibleYPosAdjust == canvasCollectible.y) ) {
-                player.collect(30);
+                player.collect(canvasCollectible.points);
                 canvasCollectible.remove();
             }
         })
