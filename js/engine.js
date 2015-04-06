@@ -27,6 +27,19 @@ var Engine = (function(global) {
 
     canvas.width = 505;
     canvas.height = 606;
+
+    // create game start/explanation screen
+    var startScreen = doc.createElement('div');
+    startScreen.id = 'startScreen';
+    doc.getElementById('container').appendChild(startScreen);
+
+    // create start button and append it to start screen
+    var startButton = doc.createElement('button');
+    startButton.onclick = kickoff;
+    startButton.textContent = 'Start new game!';
+    doc.getElementById('startScreen').appendChild(startButton);
+
+    // create the canvas
     var mainDiv = document.getElementById('main');
     mainDiv.appendChild(canvas);
 
@@ -75,14 +88,15 @@ var Engine = (function(global) {
         gameStart();
         renderCanvas();
         player.render();
-
-        var start = true;
-        if  (start == true) {
-            setTimeout(function(){ gameStop(); }, gameDuration);
-            init();
-        }
+        setTimeout(function(){ gameStop(); }, gameDuration);
+        init();
     }
 
+    // This it the kickoff function that starts the initial game when game start button is clicked
+    function kickoff() {
+        document.getElementById('startScreen').style.opacity = '0';
+        start();
+    }
 
     /* This function is called by main (our game loop) and itself calls all
      * of the functions which may need to update entity's data. Based on how
@@ -197,9 +211,6 @@ var Engine = (function(global) {
                 ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
             }
         }
-
-// >>>>> call, when user hits START button:
-        // renderEntities();
     }
 
     /* This function is called by the render function and is called on each game
@@ -256,7 +267,8 @@ var Engine = (function(global) {
         'images/Rock.png',
         'images/Selector.png'
     ]);
-    Resources.onReady(start);
+    // game start is handled by the kickoff function
+    // Resources.onReady(start);
 
     /* Assign the canvas' context object to the global variable (the window
      * object when run in a browser) so that developer's can use it more easily

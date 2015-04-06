@@ -1,5 +1,16 @@
 $(function(){
 
+    // alert("welcome to Frogger!!");
+
+    $("#dialog-message").dialog({
+      modal: true,
+      buttons: {
+        Ok: function() {
+          $(this).dialog("close");
+        }
+      }
+    });
+
     var boy = $('#char-boy');
     var catGirl = $('#char-cat-girl');
     var hornGirl = $('#char-horn-girl');

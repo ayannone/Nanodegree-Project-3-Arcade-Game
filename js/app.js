@@ -155,21 +155,11 @@ Player.prototype.reset = function(score){
     this.score = score;
     var scoreEl = document.getElementById('score');
     scoreEl.innerHTML = this.score;
-    // placeCollectiblesOnCanvas();
 }
 
 Player.prototype.collect = function(score){
     this.score += score; //collectible.value;
 }
-
-// Player.prototype.stop = function(score){
-//     this.x = playerStartXPos;
-//     this.y = playerStartYPos;
-//     this.score = score;
-//     var scoreEl = document.getElementById('score');
-//     scoreEl.innerHTML = this.score;
-//     removeCollectiblesFromCanvas()
-// }
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
@@ -273,7 +263,6 @@ function keyFunction(e) {
     player.handleInput(allowedKeys[e.keyCode]);
 }
 
-
 // set a timer for the game, started in start() function in engine.js
 // with a duration of 'gameDuration' in milliseconds
 
@@ -281,20 +270,25 @@ var timerEl = document.getElementById('timer');
 var timer = gameDuration / 1000;
 timerEl.innerHTML = timer;
 
-var gameInterval = setInterval(function(){
-    timer -= 1;
-    timerEl.innerHTML = timer;
-}, 1000);
+var gameInterval;
+var gameSound = new Audio('sounds/251461__joshuaempyre__arcade-music-loop.wav');
 
 function gameStart() {
     console.log("Game start");
+    gameSound.play();
     activateKeys(); // each game start => activate the keys
+    gameInterval = setInterval(function(){
+        timer -= 1;
+        timerEl.innerHTML = timer;
+    }, 1000);
 }
 
 function gameStop() {
     console.log("Game over");
+    gameSound.pause();
     deactivateKeys(); // each game stop => deactivate the keys
+    timerEl.innerHTML = 0;
+    clearInterval(gameInterval); // stop timer
     player.reset(player.score); // move player to start position
     removeCollectiblesFromCanvas();
-    clearInterval(gameInterval); // stop timer
 }

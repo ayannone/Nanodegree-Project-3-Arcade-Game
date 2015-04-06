@@ -18,6 +18,17 @@ h2 {
   padding-top: 10px;
 }
 
+#startScreen {
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  height: 606px;
+  width: 505px;
+  background-color: red;
+}
+
 aside.left, aside.right {
   padding-top: 100px;
   width: 25%;
