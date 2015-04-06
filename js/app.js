@@ -1,7 +1,7 @@
 // Globals to set the min and max coordinate values for moving Player and Enemies on the canvas
 
-var gameDuration = 5000; // value in milliseconds
-var numEnemies = 0; //4;
+var gameDuration = 15000; // value in milliseconds
+var numEnemies = 4;
 
 var lenX = 101;
 var lenY = 83;
@@ -104,7 +104,7 @@ Player.prototype.setSprite = function() {
 // automatically to start position, when reached the water line
 Player.prototype.update = function(dt) {
     if (this.y <= 0) {
-        this.score += 100;
+        this.score += 20;
         this.reset(this.score);
         placeCollectiblesOnCanvas();
     }
@@ -164,12 +164,19 @@ Player.prototype.collect = function(score){
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 
-var allEnemies = [];
+var allEnemies;
 
-for (var i=0; i < numEnemies; i++) {
-    var startX = -(Math.floor((Math.random() * 5) + 1) * lenX);
-    var startY = Math.floor((Math.random() * 3) + 1) * lenY;
-    allEnemies.push(new Enemy(startX,startY));
+function placeEnemiesOnCanvas(){
+    allEnemies = [];
+    for (var i=0; i < numEnemies; i++) {
+        var startX = -(Math.floor((Math.random() * 5) + 1) * lenX);
+        var startY = Math.floor((Math.random() * 3) + 1) * lenY;
+        allEnemies.push(new Enemy(startX,startY));
+    }
+}
+
+function removeEnemiesFromCanvas(){
+    allEnemies = [];
 }
 
 // Place all collectible objects in an array called allCollectibles
@@ -275,8 +282,10 @@ var gameSound = new Audio('sounds/251461__joshuaempyre__arcade-music-loop.wav');
 
 function gameStart() {
     console.log("Game start");
+    player.render();
     gameSound.play();
     activateKeys(); // each game start => activate the keys
+    placeEnemiesOnCanvas();
     gameInterval = setInterval(function(){
         timer -= 1;
         timerEl.innerHTML = timer;
@@ -287,6 +296,7 @@ function gameStop() {
     console.log("Game over");
     gameSound.pause();
     deactivateKeys(); // each game stop => deactivate the keys
+    removeEnemiesFromCanvas();
     timerEl.innerHTML = 0;
     clearInterval(gameInterval); // stop timer
     player.reset(player.score); // move player to start position

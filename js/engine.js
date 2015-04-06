@@ -78,21 +78,24 @@ var Engine = (function(global) {
      * game loop.
      */
     function init() {
+        gameStart(); // defined in app.js
+        renderCanvas();
         reset();
         lastTime = Date.now();
         main();
     }
 
-    // This function starts a new game with a timer of gameDuration in milliseconds
-    function start() {
-        gameStart();
-        renderCanvas();
-        player.render();
-        setTimeout(function(){ gameStop(); }, gameDuration);
-        init();
+    function stop() {
+        gameStop(); // defined in app.js
     }
 
-    // This it the kickoff function that starts the initial game when game start button is clicked
+    // This function starts a new game with a timer of gameDuration in milliseconds
+    function start() {
+        init();
+        setTimeout(function(){ stop(); }, gameDuration);
+    }
+
+    // This it the kickoff function that starts the game when game start button is clicked
     function kickoff() {
         document.getElementById('startScreen').style.opacity = '0';
         start();
