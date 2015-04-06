@@ -43,7 +43,6 @@ var Engine = (function(global) {
     // create score info div and append it to the start screen
     var scoreInfo = doc.createElement('div');
     scoreInfo.id = 'scoreInfo';
-    scoreInfo.textContent = player.score;
     doc.getElementById('startScreen').appendChild(scoreInfo);
 
     // create the canvas
@@ -93,9 +92,9 @@ var Engine = (function(global) {
     }
 
     function stop() {
-        gameStop(); // defined in app.js
+        document.getElementById('scoreInfo').innerHTML = "Score: " + player.score;
         document.getElementById('startScreen').style.opacity = '1';
-        scoreInfo = "100";
+        gameStop(); // defined in app.js
     }
 
     // This function starts a new game with a timer of gameDuration in milliseconds

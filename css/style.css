@@ -42,7 +42,8 @@ h2 {
   width: 505px;
   margin-top: 50px;
   padding: 50px;
-  /*background-color: blue;*/
+  font-size: 20px;
+  font-weight: bold;
 }
 
 aside.left, aside.right {
