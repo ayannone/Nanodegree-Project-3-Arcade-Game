@@ -87,6 +87,7 @@ var Engine = (function(global) {
 
     function stop() {
         gameStop(); // defined in app.js
+        document.getElementById('startScreen').style.opacity = '1';
     }
 
     // This function starts a new game with a timer of gameDuration in milliseconds

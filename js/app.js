@@ -1,6 +1,6 @@
 // Globals to set the min and max coordinate values for moving Player and Enemies on the canvas
 
-var gameDuration = 15000; // value in milliseconds
+var gameDuration = 5000; // value in milliseconds
 var numEnemies = 4;
 
 var lenX = 101;
@@ -274,18 +274,19 @@ function keyFunction(e) {
 // with a duration of 'gameDuration' in milliseconds
 
 var timerEl = document.getElementById('timer');
-var timer = gameDuration / 1000;
-timerEl.innerHTML = timer;
-
+var timer;
 var gameInterval;
-var gameSound = new Audio('sounds/251461__joshuaempyre__arcade-music-loop.wav');
+var gameSound;
 
 function gameStart() {
     console.log("Game start");
     player.render();
-    gameSound.play();
+    gameSound = new Audio('sounds/251461__joshuaempyre__arcade-music-loop.wav');
+    gameSound.play(); // (re-)start music
     activateKeys(); // each game start => activate the keys
     placeEnemiesOnCanvas();
+    timer = gameDuration / 1000;
+    timerEl.innerHTML = timer;
     gameInterval = setInterval(function(){
         timer -= 1;
         timerEl.innerHTML = timer;
@@ -294,7 +295,7 @@ function gameStart() {
 
 function gameStop() {
     console.log("Game over");
-    gameSound.pause();
+    gameSound.pause(); // stop music
     deactivateKeys(); // each game stop => deactivate the keys
     removeEnemiesFromCanvas();
     timerEl.innerHTML = 0;
