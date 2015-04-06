@@ -1,16 +1,5 @@
 $(function(){
 
-    // alert("welcome to Frogger!!");
-
-    $("#dialog-message").dialog({
-      modal: true,
-      buttons: {
-        Ok: function() {
-          $(this).dialog("close");
-        }
-      }
-    });
-
     var boy = $('#char-boy');
     var catGirl = $('#char-cat-girl');
     var hornGirl = $('#char-horn-girl');
@@ -18,6 +7,10 @@ $(function(){
     var princessGirl = $('#char-princess-girl');
 
     var characters = [boy, catGirl, hornGirl, pinkGirl, princessGirl];
+
+    // char-boy is default character/player
+    boy.css({'background-color': "red"}).addClass("active");
+    player.setSprite();
 
     var resetCharBackground = function(){
         for (var i = 0; i < characters.length; i++) {

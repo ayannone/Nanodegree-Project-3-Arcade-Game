@@ -88,8 +88,7 @@ var Player = function() {
 
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
-    this.sprite = 'images/char-boy.png';
-    // this.setSprite();
+    this.setSprite();
     this.x = playerStartXPos;
     this.y = playerStartYPos;
     this.score = 0;
@@ -97,7 +96,6 @@ var Player = function() {
 
 Player.prototype.setSprite = function() {
     this.sprite = $('.active').attr('src');
-    // console.log('this.sprite: ', this.sprite);
 }
 
 // Update the player's position,
@@ -158,7 +156,7 @@ Player.prototype.reset = function(score){
 }
 
 Player.prototype.collect = function(score){
-    this.score += score; //collectible.value;
+    this.score += score;
 }
 
 // Now instantiate your objects.
