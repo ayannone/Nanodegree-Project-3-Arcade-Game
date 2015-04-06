@@ -47,7 +47,7 @@ h2 {
 }
 
 aside.left, aside.right {
-  padding-top: 100px;
+  padding-top: 75px;
   width: 25%;
 }
 
@@ -78,6 +78,10 @@ aside.left, aside.right {
   margin: 0 auto;
 }
 
+#players h2 {
+  margin-bottom: 50px;
+}
+
 .crop {
   float: left;
   height: 30%;
@@ -91,14 +95,21 @@ aside.left, aside.right {
   margin-bottom: -10px;
 }
 
-/*ul {
-  list-style: none;
+table {
+  margin: 25px 0 0 15px;
 }
 
-ul li, div {
-  display: inline;
-}*/
+td:nth-of-type(2) {
+  padding-left: 15px;
+  text-align: left;
+}
 
-/*ul li #active {
-  background: rgba(255,0,0,0.1);
-}*/
+.small {
+  height: 30%;
+  overflow: hidden;
+}
+
+.small img {
+  height: 40%;
+  margin-top: -20px;
+}

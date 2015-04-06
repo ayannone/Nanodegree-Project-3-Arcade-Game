@@ -17,6 +17,7 @@ var playerPrevYPos;
 
 var enemyMaxXPos = 5 * lenX; //505;
 
+// images and points
 var collectibles = [
     ['images/Gem Blue.png',10],
     ['images/Gem Green.png',10],
@@ -25,7 +26,7 @@ var collectibles = [
     ['images/Star.png',30],
     ['images/Rock.png',0],
     ['images/Key.png',30],
-    ['images/Selector.png',30]
+    ['images/Selector.png',50]
     ];
 var collectibleYPosAdjust = 20; // number of pixels to subtract from y position to nicely place collectible on canvas
 var numPlayCollectibles = 3; // number of collectibles placed on canvas, randomly chosen
