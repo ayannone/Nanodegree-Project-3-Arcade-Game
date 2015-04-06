@@ -289,6 +289,7 @@ function gameStart() {
         timer -= 1;
         timerEl.innerHTML = timer;
     }, 1000);
+    disableCharacterSelection();
 }
 
 function gameStop() {
@@ -300,4 +301,6 @@ function gameStop() {
     clearInterval(gameInterval); // stop timer
     player.reset(0); // move player to start position
     removeCollectiblesFromCanvas();
+    // clickCharacter();
+    enableCharacterSelection();
 }

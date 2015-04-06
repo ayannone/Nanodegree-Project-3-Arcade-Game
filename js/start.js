@@ -1,3 +1,6 @@
+var enableCharacterSelection; /* function gameStop in app.js calls this */
+var disableCharacterSelection; /* function gameStart in app.js calls this */
+
 $(function(){
 
     var boy = $('#char-boy');
@@ -23,13 +26,25 @@ $(function(){
         player.setSprite();
     };
 
-    var clickCharacter = function(){
+    // enable character selection before and after a game
+    enableCharacterSelection = function(){
         for (var i = 0; i < characters.length; i++) {
             characters[i].click(function(){
                 resetCharBackground();
                 selectCharacter(this);
-          })
+            })
         }
-    }();
+     };
+    // call this function to enable character selection before the first game is started
+    // enableCharacterSelection cannot be a self calling function, because it is also called
+    // from the function gameStop in app.js
+    enableCharacterSelection();
+
+    // disable character selection during a game
+    disableCharacterSelection = function(){
+        for (var i = 0; i < characters.length; i++) {
+            characters[i].off("click");
+        }
+    };
 
 })
