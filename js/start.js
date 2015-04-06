@@ -1,5 +1,15 @@
 $(function(){
 
+    // $("#game-button").click(function(){
+    //     alert("Game starts");
+    // });
+
+    // document.getElementById("game-button").addEventListener('click', function(event) {
+    //     event.preventDefault();
+    //     alert("...");
+    //     Resources.onReady(start);
+    // }, false);
+
     var boy = $('#char-boy');
     var catGirl = $('#char-cat-girl');
     var hornGirl = $('#char-horn-girl');

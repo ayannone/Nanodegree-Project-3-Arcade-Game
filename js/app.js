@@ -286,7 +286,6 @@ var gameInterval = setInterval(function(){
     timerEl.innerHTML = timer;
 }, 1000);
 
-
 function gameStart() {
     console.log("Game start");
     activateKeys(); // each game start => activate the keys

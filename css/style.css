@@ -28,10 +28,11 @@ h2 {
   float: left;
 }
 
-#main button {
+#main button, #game-button {
   padding: 5px;
   background-color: #66D754;
   border-radius: 15%;
+  z-index: 10;
 }
 
 #main canvas {

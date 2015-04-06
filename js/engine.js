@@ -71,7 +71,6 @@ var Engine = (function(global) {
     }
 
     // This function starts a new game with a timer of gameDuration in milliseconds
-
     function start() {
         gameStart();
         renderCanvas();
@@ -257,7 +256,6 @@ var Engine = (function(global) {
         'images/Rock.png',
         'images/Selector.png'
     ]);
-    // Resources.onReady(init);
     Resources.onReady(start);
 
     /* Assign the canvas' context object to the global variable (the window
