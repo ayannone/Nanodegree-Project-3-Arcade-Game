@@ -35,9 +35,16 @@ var Engine = (function(global) {
 
     // create start button and append it to start screen
     var startButton = doc.createElement('button');
+    startButton.id = 'startButton';
     startButton.onclick = kickoff;
     startButton.textContent = 'Start new game!';
     doc.getElementById('startScreen').appendChild(startButton);
+
+    // create score info div and append it to the start screen
+    var scoreInfo = doc.createElement('div');
+    scoreInfo.id = 'scoreInfo';
+    scoreInfo.textContent = player.score;
+    doc.getElementById('startScreen').appendChild(scoreInfo);
 
     // create the canvas
     var mainDiv = document.getElementById('main');
@@ -88,6 +95,7 @@ var Engine = (function(global) {
     function stop() {
         gameStop(); // defined in app.js
         document.getElementById('startScreen').style.opacity = '1';
+        scoreInfo = "100";
     }
 
     // This function starts a new game with a timer of gameDuration in milliseconds
@@ -167,6 +175,7 @@ var Engine = (function(global) {
             // if player hits a collectible item, then increase score and remove collectible from canvas
             } else if ( (player.x == canvasCollectible.x) && (player.y-collectibleYPosAdjust == canvasCollectible.y) ) {
                 player.collect(canvasCollectible.points);
+                doc.getElementById('score').innerHTML = player.score;
                 canvasCollectible.remove();
             }
         })

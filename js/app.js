@@ -1,6 +1,6 @@
 // Globals to set the min and max coordinate values for moving Player and Enemies on the canvas
 
-var gameDuration = 5000; // value in milliseconds
+var gameDuration = 15000; // value in milliseconds
 var numEnemies = 4;
 
 var lenX = 101;
@@ -300,6 +300,6 @@ function gameStop() {
     removeEnemiesFromCanvas();
     timerEl.innerHTML = 0;
     clearInterval(gameInterval); // stop timer
-    player.reset(player.score); // move player to start position
+    player.reset(0); // move player to start position
     removeCollectiblesFromCanvas();
 }
