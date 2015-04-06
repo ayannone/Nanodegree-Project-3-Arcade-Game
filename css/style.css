@@ -1,5 +1,5 @@
 body {
-    text-align: center;
+  text-align: center;
 }
 
 header {
@@ -18,9 +18,17 @@ h2 {
   padding-top: 10px;
 }
 
-.left {
+aside.left, aside.right {
+  padding-top: 100px;
   width: 25%;
+}
+
+.left {
   float: left;
+}
+
+.right {
+  float: right;
 }
 
 #main {
@@ -28,21 +36,13 @@ h2 {
   float: left;
 }
 
-#main button, #game-button {
-  padding: 5px;
-  background-color: #66D754;
-  border-radius: 15%;
-  z-index: 10;
-}
-
 #main canvas {
   margin: 0 auto;
   margin-top: -40px;
 }
 
-.right {
-  width: 25%;
-  float: right;
+#score, #timer {
+  margin: 0 25px;
 }
 
 ul {
