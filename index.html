@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Effective JavaScript: Frogger</title>
+    <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/style.css">
     <script src="js/jquery.js"></script>
     <script src="js/jquery-ui.js"></script>
@@ -9,35 +10,50 @@
       <!-- // <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script> -->
 </head>
 <body>
-    <ul>
-      <li>
-        <div class="crop">
-          <img id="char-boy" src="images/char-boy.png" >
-        </div>
-      </li>
-      <li>
-        <div class="crop">
-          <img id="char-cat-girl" src="images/char-cat-girl.png">
-        </div>
-      </li>
-      <li>
-        <div class="crop">
-          <img id="char-horn-girl" src="images/char-horn-girl.png">
-        </div>
-      </li>
-      <li>
-        <div class="crop">
-          <img id="char-pink-girl" src="images/char-pink-girl.png">
-        </div>
-      </li>
-      <li>
-        <div class="crop">
-          <img id="char-princess-girl" src="images/char-princess-girl.png">
-        </div>
-      </li>
-    </ul>
-    <h2>Score: <span id="score">0</span>Timer: <span id="timer"></span></h2>
+  <header>
+    <h1>Frogger Arcade Game</h1>
+  </header>
+  <nav></nav>
 
+  <aside class="left">
+    <h2>Game Rules</h2>
+  </aside>
+
+  <div id="main">
+    <h2><span class="left">Score: <span id="score">0</span></span><button class="game-button">Start New Game</button><span class="right">Timer: <span id="timer"></span></span></h2>
+  </div>
+
+
+    <aside class="right">
+      <h2>Chose a player</h2>
+      <ul>
+        <li>
+          <div class="crop">
+            <img id="char-boy" src="images/char-boy.png" >
+          </div>
+        </li>
+        <li>
+          <div class="crop">
+            <img id="char-cat-girl" src="images/char-cat-girl.png">
+          </div>
+        </li>
+        <li>
+          <div class="crop">
+            <img id="char-horn-girl" src="images/char-horn-girl.png">
+          </div>
+        </li>
+        <li>
+          <div class="crop">
+            <img id="char-pink-girl" src="images/char-pink-girl.png">
+          </div>
+        </li>
+        <li>
+          <div class="crop">
+            <img id="char-princess-girl" src="images/char-princess-girl.png">
+          </div>
+        </li>
+      </ul>
+    </aside>
     <audio autoplay loop>
       <source src="http://yourmp3-file-location.mp3"></source>
     </audio>

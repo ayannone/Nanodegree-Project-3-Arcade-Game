@@ -2,9 +2,46 @@ body {
     text-align: center;
 }
 
+header {
+  height: 75px;
+  background-color: #B158BE;
+}
+
+h1 {
+  margin: 0;
+  padding-top: 15px;
+  color: white;
+}
+
 h2 {
   margin: 0;
-  padding: 0;
+  padding-top: 10px;
+}
+
+.left {
+  width: 25%;
+  float: left;
+}
+
+#main {
+  width: 50%;
+  float: left;
+}
+
+#main button {
+  padding: 5px;
+  background-color: #66D754;
+  border-radius: 15%;
+}
+
+#main canvas {
+  margin: 0 auto;
+  margin-top: -40px;
+}
+
+.right {
+  width: 25%;
+  float: right;
 }
 
 ul {
