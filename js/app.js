@@ -87,16 +87,33 @@ Collectible.prototype.remove = function(){
     canvasCollectibles.splice(canvasCollectibles.indexOf(this),1);
 }
 
-Collectible.prototype.disappear = function() {
+Collectible.prototype.disappear = function(fadeTime) {
     var that = this;
-    var fadeTime = 3000;
     var destroyTime = fadeTime + 2000;
-    setTimeout(function () {
+
+    setTimeout(function() {
         that.fading = true;
     }, fadeTime);
-    setTimeout(function () {
+
+    setTimeout(function() {
         that.toDestroy = true;
     }, destroyTime);
+};
+
+Collectible.prototype.move = function() {
+    var that = this;
+    var expireTime = 5000;
+
+    setTimeout(function(){
+        setInterval(function() {
+            if (that.y < 415) {
+                that.y = that.y+1;
+            } else {
+                clearInterval();
+                that.disappear(0);
+            }
+        }, 1);
+    }, expireTime);
 };
 
 // Now write your own player class
@@ -255,7 +272,15 @@ function placeCollectiblesOnCanvas(){
     // if not collected
     for (var i=0; i < canvasCollectibles.length; i++){
         if ((canvasCollectibles[i].sprite).indexOf("Gem") > -1) {
-            canvasCollectibles[i].disappear();
+            canvasCollectibles[i].disappear(3000);
+        }
+    }
+
+    // the Selector Collectible will start sliding down the canvas after a given time
+    // if not collected; once in slide mode it cannot be collected anymore
+    for (var i=0; i < canvasCollectibles.length; i++){
+        if ((canvasCollectibles[i].sprite).indexOf("Selector") > -1) {
+            canvasCollectibles[i].move();
         }
     }
 }
@@ -330,6 +355,5 @@ function gameStop() {
     clearInterval(gameInterval); // stop timer
     player.reset(0); // move player to start position
     removeCollectiblesFromCanvas();
-    // clickCharacter();
     enableCharacterSelection();
 }
