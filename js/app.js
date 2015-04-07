@@ -69,15 +69,35 @@ var Collectible = function(img,points,xPos,yPos) {
     this.points = points;
     this.x = xPos;
     this.y = yPos;
+    this.fading = false;
+    this.toDestroy = false;
 }
 
 Collectible.prototype.render = function(){
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    if (this.toDestroy) {
+        this.remove();
+    } else {
+        if (this.fading) { ctx.globalAlpha = 0.5; }
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+        ctx.globalAlpha = 1;
+    }
 }
 
 Collectible.prototype.remove = function(){
     canvasCollectibles.splice(canvasCollectibles.indexOf(this),1);
 }
+
+Collectible.prototype.disappear = function() {
+    var that = this;
+    var fadeTime = 3000;
+    var destroyTime = fadeTime + 2000;
+    setTimeout(function () {
+        that.fading = true;
+    }, fadeTime);
+    setTimeout(function () {
+        that.toDestroy = true;
+    }, destroyTime);
+};
 
 // Now write your own player class
 // This class requires an update(), render() and
@@ -229,6 +249,14 @@ function placeCollectiblesOnCanvas(){
             }
         }
         return [xPos,yPos];
+    }
+
+    // all Collectibles that are Gems will disappear from the Canvas after a given time
+    // if not collected
+    for (var i=0; i < canvasCollectibles.length; i++){
+        if ((canvasCollectibles[i].sprite).indexOf("Gem") > -1) {
+            canvasCollectibles[i].disappear();
+        }
     }
 }
 
