@@ -19,13 +19,13 @@ var enemyMaxXPos = 5 * lenX; //505;
 
 // images and points
 var collectibles = [
-    ['images/Gem Blue.png',10],
-    ['images/Gem Green.png',10],
-    ['images/Gem Orange.png',10],
-    ['images/Heart.png',30],
-    ['images/Star.png',30],
+    ['images/Gem Blue.png',30],
+    ['images/Gem Green.png',30],
+    ['images/Gem Orange.png',30],
+    ['images/Heart.png',10],
+    ['images/Star.png',10],
     ['images/Rock.png',0],
-    ['images/Key.png',30],
+    ['images/Key.png',10],
     ['images/Selector.png',50]
     ];
 var collectibleYPosAdjust = 20; // number of pixels to subtract from y position to nicely place collectible on canvas
