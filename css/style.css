@@ -1,4 +1,5 @@
 body {
+  font-family: 'Averia Libre', cursive;
   text-align: center;
 }
 
@@ -30,8 +31,9 @@ h2 {
 }
 
 #startButton {
-  padding: 20px;
-  margin-top: 100px;
+  font-size: 1.5em;
+  padding: 40px;
+  margin-top: 150px;
   border-radius: 5px;
   background-color: #00EC00;
 }
@@ -62,6 +64,11 @@ aside.left, aside.right {
 #main {
   width: 50%;
   float: left;
+}
+
+#main img {
+  display: none;
+  float: right;
 }
 
 #main canvas {
@@ -97,6 +104,7 @@ aside.left, aside.right {
 
 table {
   margin: 25px 0 0 15px;
+  font-size: 0.9em;
 }
 
 td:nth-of-type(2) {
@@ -112,4 +120,11 @@ td:nth-of-type(2) {
 .small img {
   height: 40%;
   margin-top: -20px;
+}
+
+footer {
+  clear: both;
+  background-color: lightgrey;
+  padding: 20px;
+  font-size: 0.7em;
 }

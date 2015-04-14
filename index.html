@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Effective JavaScript: Frogger</title>
+    <link href='https://fonts.googleapis.com/css?family=Averia+Libre:700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/style.css">
     <script src="js/jquery.js"></script>
@@ -66,8 +67,10 @@
         <div id="main">
             <h2>
                 Score: <span id="score">0</span>
-                Timer: <span id="timer"></span>
+                Remaining Time: <span id="timer">30</span>
             </h2>
+            <img id="mute-sound-symbol" src="images/volumecontrol.png" alt="Mute">
+            <img id="play-sound-symbol" src="images/sound64.png" alt="Sound">
         </div>
 
         <aside class="right">
@@ -92,6 +95,12 @@
         </aside>
 
     </div>
+
+    <footer>
+        <h3>Created by Andrea Yannone, April 2015</h3>
+        <div>Icons made by <a href="http://www.flaticon.com/authors/egor-rumyantsev" title="Egor Rumyantsev">Egor Rumyantsev</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></div>
+        <div>Icons made by <a href="http://www.flaticon.com/authors/elegant-themes" title="Elegant Themes">Elegant Themes</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></div>
+    </footer>
 
     <script src="js/start.js"></script>
     <script src="js/resources.js"></script>

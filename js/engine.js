@@ -92,7 +92,7 @@ var Engine = (function(global) {
     }
 
     function stop() {
-        document.getElementById('scoreInfo').innerHTML = "Score: " + player.score;
+        document.getElementById('scoreInfo').innerHTML = "Your Score: " + player.score;
         document.getElementById('startScreen').style.opacity = '1';
         gameStop(); // defined in app.js
     }

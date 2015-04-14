@@ -322,6 +322,30 @@ function keyFunction(e) {
     player.handleInput(allowedKeys[e.keyCode]);
 }
 
+function playSound(){
+    $("#mute-sound-symbol").show();
+    gameSound = new Audio('sounds/251461__joshuaempyre__arcade-music-loop.wav');
+    gameSound.play(); // (re-)start music
+}
+
+function stopSound(){
+    $("#mute-sound-symbol").hide();
+    $("#play-sound-symbol").hide();
+    gameSound.pause(); // stop music
+}
+
+$("#mute-sound-symbol").click(function(){
+    $("#mute-sound-symbol").hide();
+    $("#play-sound-symbol").show();
+    gameSound.pause();
+});
+
+$("#play-sound-symbol").click(function(){
+    $("#play-sound-symbol").hide();
+    $("#mute-sound-symbol").show();
+    gameSound.play();
+});
+
 // set a timer for the game, started in start() function in engine.js
 // with a duration of 'gameDuration' in milliseconds
 
@@ -333,8 +357,7 @@ var gameSound;
 function gameStart() {
     console.log("Game start");
     player.render();
-    gameSound = new Audio('sounds/251461__joshuaempyre__arcade-music-loop.wav');
-    gameSound.play(); // (re-)start music
+    playSound();
     activateKeys(); // each game start => activate the keys
     placeEnemiesOnCanvas();
     timer = gameDuration / 1000;
@@ -348,7 +371,7 @@ function gameStart() {
 
 function gameStop() {
     console.log("Game over");
-    gameSound.pause(); // stop music
+    stopSound();
     deactivateKeys(); // each game stop => deactivate the keys
     removeEnemiesFromCanvas();
     timerEl.innerHTML = 0;
