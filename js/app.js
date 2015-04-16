@@ -1,24 +1,24 @@
 // Globals to set the min and max coordinate values for moving Player and Enemies on the canvas
 
-var gameDuration = 30000; // value in milliseconds = 30 secs
-var numEnemies = 4;
+var GAME_DURATION = 30000; // value in milliseconds = 30 secs
+var NUM_ENENIES = 4;
 
-var lenX = 101;
-var lenY = 83;
+var LEN_X = 101;
+var LEN_Y = 83;
 
-var playerStartXPos = 2 * lenX;
-var playerStartYPos = 5 * lenY;
-var playerMinXPos = 0;
-var playerMinYPos = -40;
-var playerMaxXPos = 4 * lenX; //404;
-var playerMaxYPos = 5 * lenY; //415;
+var PLAYER_START_X_POS = 2 * LEN_X;
+var PLAYER_START_Y_POS = 5 * LEN_Y;
+var PLAYER_MIN_X_POS = 0;
+var PLAYER_MIN_Y_POS = -40;
+var PLAYER_MAX_X_POS = 4 * LEN_X; //404;
+var PLAYER_MAX_Y_POS = 5 * LEN_Y; //415;
 var playerPrevXPos;
 var playerPrevYPos;
 
-var enemyMaxXPos = 5 * lenX; //505;
+var ENEMY_MAX_X_POS = 5 * LEN_X; //505;
 
 // images and points
-var collectibles = [
+var COLLECTIBLES = [
     ['images/Gem Blue.png',30],
     ['images/Gem Green.png',30],
     ['images/Gem Orange.png',30],
@@ -28,8 +28,9 @@ var collectibles = [
     ['images/Key.png',10],
     ['images/Selector.png',50]
     ];
-var collectibleYPosAdjust = 20; // number of pixels to subtract from y position to nicely place collectible on canvas
-var numPlayCollectibles = 3; // number of collectibles placed on canvas, randomly chosen
+
+var COLLECTIBLE_Y_POS_ADJUST = 20; // number of pixels to subtract from y position to nicely place collectible on canvas
+var NUM_PLAY_COLLECTIBLES = 3; // number of collectibles placed on canvas, randomly chosen
 
 // Enemies our player must avoid
 var Enemy = function(startX,startY) {
@@ -42,7 +43,7 @@ var Enemy = function(startX,startY) {
     this.x = startX;
     this.y = startY;
     this.speed = Math.floor((Math.random() * 100) + 100); // speed  between 100 and 200
-}
+};
 
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
@@ -50,18 +51,18 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
-    if (this.x > enemyMaxXPos) {
-        this.x = -(Math.floor((Math.random() * 5) + 1) * lenX);
-        this.y = Math.floor((Math.random() * 3) + 1) * lenY;
+    if (this.x > ENEMY_MAX_X_POS) {
+        this.x = -(Math.floor((Math.random() * 5) + 1) * LEN_X);
+        this.y = Math.floor((Math.random() * 3) + 1) * LEN_Y;
     } else {
         this.x = this.x + (this.speed * dt);
     }
-}
+};
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-}
+};
 
 // These are collectibles to earn points and other things
 var Collectible = function(img,points,xPos,yPos) {
@@ -71,7 +72,7 @@ var Collectible = function(img,points,xPos,yPos) {
     this.y = yPos;
     this.fading = false;
     this.toDestroy = false;
-}
+};
 
 Collectible.prototype.render = function(){
     if (this.toDestroy) {
@@ -81,11 +82,11 @@ Collectible.prototype.render = function(){
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
         ctx.globalAlpha = 1;
     }
-}
+};
 
 Collectible.prototype.remove = function(){
     canvasCollectibles.splice(canvasCollectibles.indexOf(this),1);
-}
+};
 
 Collectible.prototype.disappear = function(fadeTime) {
     var that = this;
@@ -102,7 +103,7 @@ Collectible.prototype.disappear = function(fadeTime) {
 
 Collectible.prototype.move = function() {
     var that = this;
-    var expireTime = 5000;
+    var EXPIRE_TIME = 5000;
 
     setTimeout(function(){
         setInterval(function() {
@@ -113,7 +114,7 @@ Collectible.prototype.move = function() {
                 that.disappear(0);
             }
         }, 1);
-    }, expireTime);
+    }, EXPIRE_TIME);
 };
 
 // Now write your own player class
@@ -127,14 +128,14 @@ var Player = function() {
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.setSprite();
-    this.x = playerStartXPos;
-    this.y = playerStartYPos;
+    this.x = PLAYER_START_X_POS;
+    this.y = PLAYER_START_Y_POS;
     this.score = 0;
-}
+};
 
 Player.prototype.setSprite = function() {
     this.sprite = $('.active').attr('src');
-}
+};
 
 // Update the player's position,
 // automatically to start position, when reached the water line
@@ -144,38 +145,38 @@ Player.prototype.update = function(dt) {
         this.reset(this.score);
         placeCollectiblesOnCanvas();
     }
-}
+};
 
 // Draw the player on the screen, required method for game
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-}
+};
 
 // Draw the player on the screen, required method for game
 Player.prototype.handleInput = function(key) {
 
     switch(key) {
         case 'left': // x cannot be smaller than 0
-            var leftPos = this.x - lenX;
-            if (leftPos >= playerMinXPos) {
+            var leftPos = this.x - LEN_X;
+            if (leftPos >= PLAYER_MIN_X_POS) {
                 this.x = leftPos;
             };
             break;
         case 'up': // y cannot be smaller than -40
-            var upPos = this.y - lenY;
-            if (upPos >= playerMinYPos) {
+            var upPos = this.y - LEN_Y;
+            if (upPos >= PLAYER_MIN_Y_POS) {
                 this.y = upPos;
             };
             break;
         case 'right': // x cannot be bigger than 404
-            var rightPos = this.x + lenX;
-            if (rightPos <= playerMaxXPos) {
+            var rightPos = this.x + LEN_X;
+            if (rightPos <= PLAYER_MAX_X_POS) {
                 this.x = rightPos;
             };
             break;
         case 'down': // y cannot be bigger than 415
-            var downPos = this.y + lenY;
-            if (downPos <= playerMaxYPos) {
+            var downPos = this.y + LEN_Y;
+            if (downPos <= PLAYER_MAX_Y_POS) {
                 this.y = downPos;
             };
             break;
@@ -183,19 +184,19 @@ Player.prototype.handleInput = function(key) {
             console.log("wrong key for moving player");
     }
     // console.log("Player position: ", this.x, this.y);
-}
+};
 
 Player.prototype.reset = function(score){
-    this.x = playerStartXPos;
-    this.y = playerStartYPos;
+    this.x = PLAYER_START_X_POS;
+    this.y = PLAYER_START_Y_POS;
     this.score = score;
     var scoreEl = document.getElementById('score');
     scoreEl.innerHTML = this.score;
-}
+};
 
 Player.prototype.collect = function(score){
     this.score += score;
-}
+};
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
@@ -204,9 +205,9 @@ var allEnemies;
 
 function placeEnemiesOnCanvas(){
     allEnemies = [];
-    for (var i=0; i < numEnemies; i++) {
-        var startX = -(Math.floor((Math.random() * 5) + 1) * lenX);
-        var startY = Math.floor((Math.random() * 3) + 1) * lenY;
+    for (var i=0; i < NUM_ENENIES; i++) {
+        var startX = -(Math.floor((Math.random() * 5) + 1) * LEN_X);
+        var startY = Math.floor((Math.random() * 3) + 1) * LEN_Y;
         allEnemies.push(new Enemy(startX,startY));
     }
 }
@@ -226,15 +227,15 @@ function placeCollectiblesOnCanvas(){
     canvasCollectibles = [];
 
     // create a copy of collectibles => allCollectibles
-    collectibles.forEach(function(collectible){
+    COLLECTIBLES.forEach(function(collectible){
         allCollectibles.push(collectible);
     });
     var positions = []
     var xPos, yPos;
     var playCollectibleImgPoints = [];
 
-    // only 'numPlayCollectibles' collectibles are placed on the canvas
-    for (var x=0; x < numPlayCollectibles; x++) {
+    // only 'NUM_PLAY_COLLECTIBLES' collectibles are placed on the canvas
+    for (var x=0; x < NUM_PLAY_COLLECTIBLES; x++) {
         var index = Math.floor(Math.random() * allCollectibles.length);
         playCollectibleImgPoints.push(allCollectibles[index]);
         allCollectibles.splice(index,1);
@@ -243,8 +244,8 @@ function placeCollectiblesOnCanvas(){
     // place the first collectible on the canvas and for all the others call 'checkPosition'
     // to place each collectible on its own tile
     for (var i=0; i < playCollectibleImgPoints.length; i++) {
-        xPos = Math.floor((Math.random() * 5) + 0) * lenX;
-        yPos = (Math.floor((Math.random() * 3) + 1) * lenY)-collectibleYPosAdjust;
+        xPos = Math.floor((Math.random() * 5) + 0) * LEN_X;
+        yPos = (Math.floor((Math.random() * 3) + 1) * LEN_Y)-COLLECTIBLE_Y_POS_ADJUST;
         if (positions.length != 0) {
             var position = checkPosition(positions,xPos,yPos);
             xPos = position[0];
@@ -260,8 +261,8 @@ function placeCollectiblesOnCanvas(){
     function checkPosition(positions,xPos,yPos) {
         for (var j=0; j < positions.length; j++) {
             if ( (xPos == positions[j][0]) && (yPos == positions[j][1]) ) {
-                xPos = Math.floor((Math.random() * 5) + 0) * lenX;
-                yPos = (Math.floor((Math.random() * 3) + 1) * lenY)-collectibleYPosAdjust;
+                xPos = Math.floor((Math.random() * 5) + 0) * LEN_X;
+                yPos = (Math.floor((Math.random() * 3) + 1) * LEN_Y)-COLLECTIBLE_Y_POS_ADJUST;
                 return checkPosition(positions,xPos,yPos);
             }
         }
@@ -347,7 +348,7 @@ $("#play-sound-symbol").click(function(){
 });
 
 // set a timer for the game, started in start() function in engine.js
-// with a duration of 'gameDuration' in milliseconds
+// with a duration of 'GAME_DURATION' in milliseconds
 
 var timerEl = document.getElementById('timer');
 var timer;
@@ -360,7 +361,7 @@ function gameStart() {
     playSound();
     activateKeys(); // each game start => activate the keys
     placeEnemiesOnCanvas();
-    timer = gameDuration / 1000;
+    timer = GAME_DURATION / 1000;
     timerEl.innerHTML = timer;
     gameInterval = setInterval(function(){
         timer -= 1;

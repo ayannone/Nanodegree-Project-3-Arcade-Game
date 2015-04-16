@@ -77,7 +77,7 @@ var Engine = (function(global) {
          * function again as soon as the browser is able to draw another frame.
          */
         win.requestAnimationFrame(main);
-    };
+    }
 
     /* This function does some initial setup that should only occur once,
      * particularly setting the lastTime variable that is required for the
@@ -100,7 +100,7 @@ var Engine = (function(global) {
     // This function starts a new game with a timer of gameDuration in milliseconds
     function start() {
         init();
-        setTimeout(function(){ stop(); }, gameDuration);
+        setTimeout(function(){ stop(); }, GAME_DURATION);
     }
 
     // This it the kickoff function that starts the game when game start button is clicked
@@ -145,26 +145,26 @@ var Engine = (function(global) {
 
         // when player hits an enemy the game is over and player returns to start position
         allEnemies.forEach(function(enemy) {
-            for (var i = enemy.x; i <= enemy.x+lenX; i++) {
-                if (i >= player.x+colSpace && i <= player.x+lenX-colSpace) {
-                    for (var j = enemy.y-lenY; j <= enemy.y; j++) {
-                        if (j >= player.y-lenY+colSpace && j <= player.y-colSpace) {
+            for (var i = enemy.x; i <= enemy.x+LEN_X; i++) {
+                if (i >= player.x+colSpace && i <= player.x+LEN_X-colSpace) {
+                    for (var j = enemy.y-LEN_Y; j <= enemy.y; j++) {
+                        if (j >= player.y-LEN_Y+colSpace && j <= player.y-colSpace) {
                             player.reset(0);
                             reset();
                         }
                     }
                 }
             }
-        });
+        })
 
         // when player hits an obstacle (stone), then set player's position back to prev position
         // so player cannot move over obstacle
         canvasCollectibles.forEach(function(canvasCollectible){
             if (canvasCollectible.sprite == "images/Rock.png") {
-                for (var i = canvasCollectible.x; i <= canvasCollectible.x+lenX; i++) {
-                    if (i >= player.x+colSpace && i <= player.x+lenX-colSpace) {
-                        for (var j = canvasCollectible.y-lenY; j <= canvasCollectible.y; j++) {
-                            if (j >= player.y-lenY+colSpace && j <= player.y-colSpace) {
+                for (var i = canvasCollectible.x; i <= canvasCollectible.x+LEN_X; i++) {
+                    if (i >= player.x+colSpace && i <= player.x+LEN_X-colSpace) {
+                        for (var j = canvasCollectible.y-LEN_Y; j <= canvasCollectible.y; j++) {
+                            if (j >= player.y-LEN_Y+colSpace && j <= player.y-colSpace) {
                                 player.x = playerPrevXPos;
                                 player.y = playerPrevYPos;
                             }
@@ -172,7 +172,7 @@ var Engine = (function(global) {
                     }
                 }
             // if player hits a collectible item, then increase score and remove collectible from canvas
-            } else if ( (player.x == canvasCollectible.x) && (player.y-collectibleYPosAdjust == canvasCollectible.y) ) {
+            } else if ( (player.x == canvasCollectible.x) && (player.y-COLLECTIBLE_Y_POS_ADJUST == canvasCollectible.y) ) {
                 player.collect(canvasCollectible.points);
                 doc.getElementById('score').innerHTML = player.score;
                 canvasCollectible.remove();
