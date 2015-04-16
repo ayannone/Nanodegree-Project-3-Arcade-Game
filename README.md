@@ -14,4 +14,6 @@ Here are the rules:
 
 GOOD LUCK!!
 
+PLAY IT HERE <a href="http://ayannone.github.io/Nanodegree-Project-3-Arcade-Game/">Arcade Game - Frogger</a>
+
 ![Frogger Game](https://github.com/ayannone/Nanodegree-Project-3-Arcade-Game/raw/master/images/frogger.png)
