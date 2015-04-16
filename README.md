@@ -14,5 +14,5 @@ Here are the rules:
 
 GOOD LUCK!!
 
-![image](https://raw.githubusercontent.com/ayannone/Nanodegree-Project-3-Arcade-Game/images/frogger.jpg "Arcade Game - Frogger")
+![alt tag](https://raw.githubusercontent.com/ayannone/Nanodegree-Project-3-Arcade-Game/images/frogger.jpg "Arcade Game - Frogger")
 
